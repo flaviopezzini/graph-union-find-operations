@@ -12,7 +12,7 @@ public class GraphNetworkTest {
 			// negative size network
 			new GraphNetwork(-1);
 			fail("It should have thrown an exception");
-		} catch (IllegalArgumentException iae) {
+		} catch (GraphNetwork.InvalidSize iae) {
 			// do nothing, this is expected
 		}
 		try {
@@ -20,7 +20,7 @@ public class GraphNetworkTest {
 			new GraphNetwork(0);
 			// valid size network
 			new GraphNetwork(1);
-		} catch (Throwable e) {
+		} catch (GraphNetwork.InvalidSize e) {
 			fail("It should not have thrown an exception");
 		}
 	}

@@ -13,7 +13,7 @@ public class GraphNetwork {
 
     public GraphNetwork(int size) {
         if (size < 0) {
-            throw new IllegalArgumentException("The size parameter must be greater or equal to zero");
+            throw new InvalidSize("The size parameter must be greater or equal to zero");
         }
         this.size = size;
         numberToNodeMap = new HashMap<>();
@@ -96,6 +96,12 @@ public class GraphNetwork {
 
     class StackOverflow extends RuntimeException {
 
+	}
+
+	class InvalidSize extends RuntimeException {
+		public InvalidSize(String message) {
+			super(message);
+		}
 	}
 
 }
