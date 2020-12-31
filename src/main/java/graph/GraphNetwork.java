@@ -21,62 +21,62 @@ public class GraphNetwork {
 
     public void union(int a, int b) {
         Node rootA = getOrAdd(a);
-		Node rootB = getOrAdd(b);
-		if (rootA.sizeOfTreeUnderThisNode >= rootB.sizeOfTreeUnderThisNode) {
-			pointToBiggerTree(rootB, rootA);
-		} else {
-			pointToBiggerTree(rootA, rootB);
-		}
+        Node rootB = getOrAdd(b);
+        if (rootA.sizeOfTreeUnderThisNode >= rootB.sizeOfTreeUnderThisNode) {
+            pointToBiggerTree(rootB, rootA);
+        } else {
+            pointToBiggerTree(rootA, rootB);
+        }
     }
 
     public boolean areConnected(int a, int b) {
-    	Node nodeA = getNodeFromNumber(a);
-    	Node nodeB = getNodeFromNumber(b);
-    	if (nodeA == null || nodeB == null) {
-    		return false;
-		}
+        Node nodeA = getNodeFromNumber(a);
+        Node nodeB = getNodeFromNumber(b);
+        if (nodeA == null || nodeB == null) {
+            return false;
+        }
         return root(nodeA).number == root(nodeB).number;
     }
 
-	private void pointToBiggerTree(Node child, Node root) {
-		child.rootOfTree = root;
-		root.sizeOfTreeUnderThisNode += child.sizeOfTreeUnderThisNode;
-	}
+    private void pointToBiggerTree(Node child, Node root) {
+        child.rootOfTree = root;
+        root.sizeOfTreeUnderThisNode += child.sizeOfTreeUnderThisNode;
+    }
 
-	private Node getOrAdd(int number) {
-    	Node node = getNodeFromNumber(number);
-		if (node == null) {
-			node = addNode(number);
-			numberToNodeMap.put(number, node);
-			return node;
-		}
-		Node rootNode = root(node);
-		return rootNode;
-	}
+    private Node getOrAdd(int number) {
+        Node node = getNodeFromNumber(number);
+        if (node == null) {
+            node = addNode(number);
+            numberToNodeMap.put(number, node);
+            return node;
+        }
+        Node rootNode = root(node);
+        return rootNode;
+    }
 
     private Node addNode(int number) {
-    	if (numberToNodeMap.size() == size) {
-    		throw new StackOverflow();
-		}
-    	Node n = new Node();
-    	n.number = number;
-    	n.sizeOfTreeUnderThisNode = 1;
-    	n.rootOfTree = n;
-    	return n;
-	}
+        if (numberToNodeMap.size() == size) {
+            throw new StackOverflow();
+        }
+        Node n = new Node();
+        n.number = number;
+        n.sizeOfTreeUnderThisNode = 1;
+        n.rootOfTree = n;
+        return n;
+    }
 
-	private Node root(Node n) {
-    	Node root = new Node(n); // separate object to prevent changing the parameter
-		while (root.number != root.rootOfTree.number) {
-			n.rootOfTree = n.rootOfTree.rootOfTree; // points to grandfather node for path compression
-			root = root.rootOfTree;
-		}
-		return root;
-	}
+    private Node root(Node n) {
+        Node root = new Node(n); // separate object to prevent changing the parameter
+        while (root.number != root.rootOfTree.number) {
+            n.rootOfTree = n.rootOfTree.rootOfTree; // points to grandfather node for path compression
+            root = root.rootOfTree;
+        }
+        return root;
+    }
 
-	private Node getNodeFromNumber(int number) {
-		return numberToNodeMap.get(number);
-	}
+    private Node getNodeFromNumber(int number) {
+        return numberToNodeMap.get(number);
+    }
 
     class Node {
         int number;
@@ -85,23 +85,23 @@ public class GraphNetwork {
 
         Node() {
 
-		}
+        }
 
         Node(Node clone) {
-        	number = clone.number;
-        	sizeOfTreeUnderThisNode = clone.sizeOfTreeUnderThisNode;
-        	rootOfTree = clone.rootOfTree;
-		}
+            number = clone.number;
+            sizeOfTreeUnderThisNode = clone.sizeOfTreeUnderThisNode;
+            rootOfTree = clone.rootOfTree;
+        }
     }
 
     class StackOverflow extends RuntimeException {
 
-	}
+    }
 
-	class InvalidSize extends RuntimeException {
-		public InvalidSize(String message) {
-			super(message);
-		}
-	}
+    class InvalidSize extends RuntimeException {
+        public InvalidSize(String message) {
+            super(message);
+        }
+    }
 
 }
